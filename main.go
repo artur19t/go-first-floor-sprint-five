@@ -102,8 +102,8 @@ type Running struct {
 // Это переопределенный метод Calories() из Training.
 func (r Running) Calories() float64 {
 	// вставьте ваш код ниже
-	speedCoef := CaloriesMeanSpeedMultiplier*r.TrainingInfo().Speed + CaloriesMeanSpeedShift
-	return speedCoef * r.Weight / MInKm * r.TrainingInfo().Duration.Hours() * MinInHours
+	speedCoef := CaloriesMeanSpeedMultiplier*r.meanSpeed() + CaloriesMeanSpeedShift
+	return speedCoef * r.Weight / MInKm * r.Duration.Hours() * MinInHours
 }
 
 // TrainingInfo возвращает структуру InfoMessage с информацией о проведенной тренировке.
@@ -143,8 +143,8 @@ type Walking struct {
 func (w Walking) Calories() float64 {
 	// вставьте ваш код ниже
 
-	coef := (CaloriesWeightMultiplier*w.Weight + (math.Pow((w.TrainingInfo().Speed/3.6), 2)/w.Height)*CaloriesSpeedHeightMultiplier*w.Weight)
-	return (coef * w.TrainingInfo().Duration.Hours() * MinInHours)
+	coef := (CaloriesWeightMultiplier*w.Weight + (math.Pow((w.meanSpeed()/3.6), 2)/w.Height)*CaloriesSpeedHeightMultiplier*w.Weight)
+	return (coef * w.Duration.Hours() * MinInHours)
 }
 
 // TrainingInfo возвращает структуру InfoMessage с информацией о проведенной тренировке.
@@ -190,8 +190,8 @@ func (s Swimming) meanSpeed() float64 {
 // Это переопределенный метод Calories() из Training.
 func (s Swimming) Calories() float64 {
 	// вставьте ваш код ниже
-	coef := (s.TrainingInfo().Speed + SwimmingCaloriesMeanSpeedShift) * SwimmingCaloriesWeightMultiplier
-	return coef * s.Weight * s.TrainingInfo().Duration.Hours()
+	coef := (s.meanSpeed() + SwimmingCaloriesMeanSpeedShift) * SwimmingCaloriesWeightMultiplier
+	return coef * s.Weight * s.Duration.Hours()
 }
 
 // TrainingInfo returns info about swimming training.
